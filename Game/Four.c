@@ -220,11 +220,13 @@ int main(){
 					}
 					else if (position == 4){
 						choice = 0;
+						player = 1;
 						break;
 					}
 				}
 				else if (choice == 2){
 					if (winner(&campo) == true){
+						player = 1;
 						break;
 					}
 					if(move == -1){
