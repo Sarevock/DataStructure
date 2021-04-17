@@ -9,6 +9,7 @@ struct pitch{
 	int col[7];
 };
 
+
 //Save Games
 #define MAX 10
 //Singolar Record
