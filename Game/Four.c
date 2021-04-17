@@ -204,6 +204,9 @@ int main(){
 							player = change(player);												
 							sleep(1);
 						}
+						else{
+							move--;
+						}
 					}
 					else if(position == 2){
 						i = singolar_undo (&ve , move);
@@ -551,7 +554,7 @@ void singolar_add(struct rec* sa, int pos){
 //Redo
 int *singolar_do(struct rec* sa, int move){
 	int *data;
-	if(move == sa->start){
+	if(move == sa->start + 1){
 		printf("Last Move\n");
 		return NULL;
 	}
