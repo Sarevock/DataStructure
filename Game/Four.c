@@ -65,32 +65,35 @@ int main(){
 	struct saveGames sa;
 	struct rec ve;
 	bool saveGa = false;
+	bool replay = false;
 	//init memory
 	init_memory(&sa);
 	int *i = NULL ;
-	int last;
 
 	//Menu
 	int choice = 0;
 
 	while (choice != 5)
-	{
-
-		system("cls");
-		printf("\n\tConnect 4");
-		printf("\n\t------------------------------");
-		printf("\n\n\t 1. Play");
-		printf("\n\t 2. Record");
-		printf("\n\t 3. Exit");
-		printf("\n\n Enter Your Choice: ");
-		scanf_s("%d", &choice);
+	{		
+		if(replay == false){
+			system("cls");
+			printf("\n\tConnect 4");
+			printf("\n\t------------------------------");
+			printf("\n\n\t 1. Play");
+			printf("\n\t 2. Record");
+			printf("\n\t 3. Exit");
+			printf("\n\n Enter Your Choice: ");
+			scanf_s("%d", &choice);
+		}		
 		switch (choice)
 		{
 		case 1:
 			win = false;
 			clrscr();
-			init(&campo);
-			singolar_init(&ve);
+			if (replay == false){
+				init(&campo);
+				singolar_init(&ve);
+			}						
 			while (win == false){
 
 				clrscr();				
@@ -106,16 +109,19 @@ int main(){
 						record(&sa, ve);
 						printf("\nSaved!");
 						printf("\nRedirecting to Main Menu!");
+						replay = false;
 						sleep(1);
 						break;
 					}
 					else if (choice == 2){
 						printf("\nRedirecting to Main Menu!");
+						replay = false;
 						sleep(1);
 						break;
 					}
 					else{
 						printf("\nRedirecting to Main Menu!");
+						replay = false;
 						sleep(1);
 						break;
 					}					
@@ -171,7 +177,6 @@ int main(){
 				save = choice - 1;
 				//pass data
 				exchange(&ve, sa, save);
-				last = ve.start;
 				move = -1;
 				//print on screen
 				printf("\nManual Replay : 1");
@@ -189,7 +194,7 @@ int main(){
 
 					printf("\n\t 1. Do");
 					printf("\n\t 2. Undo");
-					printf("\n\t 3. Modify");
+					printf("\n\t 3. Play From Here");
 					printf("\n\t 4. Exit");
 
 					printf("\n\n Enter Your Choice: ");
@@ -219,7 +224,9 @@ int main(){
 						sleep(1);
 					}
 					else if (position == 3){
-
+						replay = true;
+						choice = 1;					
+						break;
 					}
 					else if (position == 4){
 						choice = 0;
@@ -496,7 +503,7 @@ void record(struct saveGames* sa,  struct rec ve){
 }
 //Remove
 void drocer(struct saveGames* sa, int ve){
-
+	//to add remove savegame
 }
 //Test Print
 void vedere(struct saveGames* sa){
@@ -556,6 +563,7 @@ int *singolar_do(struct rec* sa, int move){
 	int *data;
 	if(move == sa->start + 1){
 		printf("Last Move\n");
+		sleep(1);	
 		return NULL;
 	}
 
@@ -566,8 +574,9 @@ int *singolar_do(struct rec* sa, int move){
 int *singolar_undo(struct rec* sa, int move){
 	int *data;
 	if(move == -1){
-        printf("No more Undo\n");
-        return NULL;
+        printf("No more Undo\n");	
+		sleep(1);	
+        return NULL;		
     }
 
 	data = &sa->re[move];
